@@ -7,7 +7,7 @@ class Node:
         self.x = x
         self.y = y
         self.l2 = x**2 + y**2
-        self.fi = arctan2(y, x) * 180.0 / pi
+        self.fi = arctan2(y, x) * 2 / pi
 
     def __bool__(self):
         return True
@@ -21,11 +21,12 @@ class Node:
         if not other:
             return False
 
-        return (self.l2 < other.l2) or (self.fi < other.fi)
+        # return (self.l2 < other.l2) or (self.fi < other.fi)
+        return self.fi <other.fi
 
 
     def __repr__(self):
-        return f'({self.x}, {self.y}, {self.l2}, {self.fi})'
+        return f'(x={self.x}, y={self.y}, l2={self.l2}, fi={self.fi})'
 
 
 
