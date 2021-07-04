@@ -6,12 +6,12 @@ class binarySearchTree:
 
     def insert(self, val):
         # check if there is no root
-        if (self.val == None):
+        if not self.val:
             self.val = val
         # check where to insert
         else:
             # check for duplicate then stop and return
-            if val < self.val: return 'no duplicates aloowed in binary search tree'
+            if val == self.val: return 'no duplicates aloowed in binary search tree'
             # check if value to be inserted < currentNode's value
             if (val < self.val):
                 # check if there is a left node to currentNode if true then recurse
