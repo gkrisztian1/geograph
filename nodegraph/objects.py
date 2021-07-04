@@ -6,8 +6,12 @@ from nodegraph import getID
 class GeometryPiece(metaclass=ABCMeta):
     tol = 1e-3
 
+    def __bool__(self):
+        return True
+
 
 class Node(GeometryPiece):
+    __slots__ = ('id', 'x', 'y', 'l2', 'fi')
     def __init__(self, x, y):
         self.id = getID()
         self.x = float(x)
@@ -20,18 +24,10 @@ class Node(GeometryPiece):
 
         self.fi = fmod(self.fi, 360.0 - self.tol)
 
-    def __bool__(self):
-        return self.l2 > self.tol ** 2
-
     def __eq__(self, o):
-        if o:
-            return (abs(self.x - o.x) < self.tol) and (abs(self.y - o.y) < self.tol)
-        else:
-            return False
+        return (abs(self.x - o.x) < self.tol) and (abs(self.y - o.y) < self.tol)
 
     def __lt__(self, o):
-        if not o:
-            return False
 
         if (self.l2 - o.l2) < -self.tol:
             return True
@@ -41,11 +37,11 @@ class Node(GeometryPiece):
             False
 
     def __repr__(self):
-        return f"(x={self.x}, y={self.y}, l2={self.l2}, fi={self.fi})"
+        return f"({self.x}, {self.y}, {self.l2}, {self.fi})"
 
 
 def Line(GeometryPiece):
-    def __init__(self, head: Node, tail: Node):
+    def __init__(self, tail, head):
         self.start = tail
         self.end = head
 
@@ -54,4 +50,7 @@ def Line(GeometryPiece):
         yield self.end.id
 
     def __eq__(self, o):
-        return not (set(self) - set(o))
+        return len(set(self) | set(o)) == 2
+
+    def __repr__(self):
+        return f'{self.tail} --> {self.head}'
