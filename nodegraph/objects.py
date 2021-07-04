@@ -1,6 +1,6 @@
 from abc import ABCMeta
 from math import atan2, fmod, pi
-from utils import getID
+from nodegraph import getID
 
 
 class GeometryPiece(metaclass=ABCMeta):
@@ -18,10 +18,10 @@ class Node(GeometryPiece):
         if self.fi < 0:
             self.fi += 360
 
-        self.fi = fmod(self.fi+self.tol, 360.0)
+        self.fi = fmod(self.fi, 360.0-self.tol)
 
     def __bool__(self):
-        return (abs(self.x) > self.tol) and (abs(self.y) > 0) 
+        return self.l2 > self.tol**2 
 
     def __eq__(self, o):
         if o:
