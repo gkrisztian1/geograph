@@ -40,7 +40,8 @@ class Node(GeometryPiece):
             return False
 
     def __repr__(self):
-        return f"({self.x}, {self.y}, {self.l2}, {self.fi})"
+        return f"N({self.x:.3f}, {self.y:.3f})"
+        # return f"({self.x}, {self.y}, {self.l2}, {self.fi})"
 
 
 class Line(GeometryPiece):
@@ -48,12 +49,15 @@ class Line(GeometryPiece):
         self.start = tail
         self.end = head
 
+    def __hash__(self):
+        return self.start.id ^ self.end.id
+
     def __iter__(self):
         yield self.start.id
         yield self.end.id
 
     def __eq__(self, o):
-        return len(set(self) | set(o)) == 2
+        return hash(self) == hash(o)
 
     def __repr__(self):
-        return f"{self.tail} --> {self.head}"
+        return f"L[{self.start} --> {self.end}]"

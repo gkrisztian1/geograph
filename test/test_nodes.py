@@ -36,3 +36,5 @@ def test_sort_nodes():
 
     reference_nodes = [e, d, b, f, h, a, c, i, g]
     assert all(map(operator.eq, nodes, reference_nodes))
+
+

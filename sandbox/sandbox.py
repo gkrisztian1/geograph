@@ -9,3 +9,4 @@ l1 = Line(n1, n2)
 l2 = Line(n2, n1)
 
 print(l1==l2)
+print(l1)
