@@ -2,6 +2,10 @@ from nodegraph import Node
 from random import shuffle
 import operator
 
+def test_node_bool():
+    n1 = Node(0, 0)
+    assert n1 is not None
+
 def test_node_eq():
 
     n1 = Node(1, 0)

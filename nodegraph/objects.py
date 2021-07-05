@@ -5,6 +5,7 @@ from nodegraph import getID
 
 class GeometryPiece(metaclass=ABCMeta):
     tol = 1e-3
+
     def __bool__(self):
         return True
 
@@ -20,7 +21,7 @@ class Node(GeometryPiece):
         if self.fi < -self.tol:
             self.fi += 360.0
 
-        self.fi = fmod(self.fi+self.tol, 360.0)-self.tol
+        self.fi = fmod(self.fi + self.tol, 360.0) - self.tol
 
     def __eq__(self, o):
         return (abs(self.x - o.x) < self.tol) and (abs(self.y - o.y) < self.tol)
@@ -42,8 +43,8 @@ class Node(GeometryPiece):
         return f"({self.x}, {self.y}, {self.l2}, {self.fi})"
 
 
-def Line(GeometryPiece):
-    def __init__(self, tail, head):
+class Line(GeometryPiece):
+    def __init__(self, tail: Node, head: Node):
         self.start = tail
         self.end = head
 
@@ -55,4 +56,4 @@ def Line(GeometryPiece):
         return len(set(self) | set(o)) == 2
 
     def __repr__(self):
-        return f'{self.tail} --> {self.head}'
+        return f"{self.tail} --> {self.head}"
