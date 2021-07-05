@@ -26,8 +26,9 @@ def test_sort_nodes():
     h = Node(0, -1)
     i = Node(-1, -1)
 
-    nodes  = [a, b, c, d, e, f, g, h, i]
+    nodes = [a, b, c, d, e, f, g, h, i]
     shuffle(nodes)
-    reference_nodes = [e, d, b, f, h, a, c, i, g]
     nodes.sort()
+
+    reference_nodes = [e, d, b, f, h, a, c, i, g]
     assert all(map(operator.eq, nodes, reference_nodes))

@@ -26,14 +26,17 @@ class Node(GeometryPiece):
         return (abs(self.x - o.x) < self.tol) and (abs(self.y - o.y) < self.tol)
 
     def __lt__(self, o):
+        diff = self.l2 - o.l2
 
-        if (self.l2 - o.l2) < -self.tol:
+        if abs(diff) < self.tol:
+            if (self.fi - o.fi) < -self.tol:
+                return True
+            else:
+                return False
+        elif diff < -self.tol:
             return True
-        
-        if (self.fi - o.fi) < -self.tol:
-            return True
-
-        return False
+        else:
+            return False
 
     def __repr__(self):
         return f"({self.x}, {self.y}, {self.l2}, {self.fi})"
