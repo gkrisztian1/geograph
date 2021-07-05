@@ -13,15 +13,12 @@ h = Node(0, -1)
 i = Node(-1, -1)
 
 nodes  = [a, b, c, d, e, f, g, h, i]
-shuffle(nodes)
+#shuffle(nodes)
 nodes.sort()
+
 
 reference_nodes = [e, d, b, f, h, a, c, i, g]
 print(list(map(operator.eq, nodes, reference_nodes)))
 
-
-from nodegraph import Line
-
-l1 = Line(a, b)
-l2 = Line(b, a)
-print(l1==l2)
+for ni in nodes:
+    print(ni)

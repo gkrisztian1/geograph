@@ -5,13 +5,11 @@ from nodegraph import getID
 
 class GeometryPiece(metaclass=ABCMeta):
     tol = 1e-3
-
     def __bool__(self):
         return True
 
 
 class Node(GeometryPiece):
-    __slots__ = ('id', 'x', 'y', 'l2', 'fi')
     def __init__(self, x, y):
         self.id = getID()
         self.x = float(x)
@@ -19,10 +17,10 @@ class Node(GeometryPiece):
         self.l2 = self.x ** 2 + self.y ** 2
         self.fi = atan2(self.y, self.x) * 180.0 / pi
 
-        if self.fi < 0:
-            self.fi += 360
+        if self.fi < -self.tol:
+            self.fi += 360.0
 
-        self.fi = fmod(self.fi, 360.0 - self.tol)
+        self.fi = fmod(self.fi+self.tol, 360.0)-self.tol
 
     def __eq__(self, o):
         return (abs(self.x - o.x) < self.tol) and (abs(self.y - o.y) < self.tol)
@@ -31,10 +29,11 @@ class Node(GeometryPiece):
 
         if (self.l2 - o.l2) < -self.tol:
             return True
-        elif (self.fi - o.fi) < -self.tol:
+        
+        if (self.fi - o.fi) < -self.tol:
             return True
-        else:
-            False
+
+        return False
 
     def __repr__(self):
         return f"({self.x}, {self.y}, {self.l2}, {self.fi})"

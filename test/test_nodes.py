@@ -8,6 +8,13 @@ def test_node_eq():
     n2 = Node(1, 0)
     assert n1==n2
 
+def test_node_neq():
+
+    n1 = Node(1.0, 0)
+    n2 = Node(0, 1.0)
+    assert n1 != n2
+
+
 def test_sort_nodes():
     a = Node(1, 1)
     b = Node(0, 1)
