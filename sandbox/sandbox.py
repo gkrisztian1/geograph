@@ -1,12 +1,20 @@
-from nodegraph import Node
-from nodegraph import Line
+
+class A:
+
+    def __init__(self, x, y):
+        self.vec = [x, y]
+
+    def __getattribute__(self, name: str):
+        if name == 'x':
+            return self.vec[0]
+
+        elif name == 'y':
+            return self.vec[1]
 
 
-n1 = Node(4,5)
-n2 = Node(54,-4.3443)
 
-l1 = Line(n1, n2)
-l2 = Line(n2, n1)
 
-print(l1==l2)
-print(l1)
+
+a = A(6, 7)
+
+print(a.x, a.y)
