@@ -2,6 +2,7 @@ from nodegraph import Node
 from random import shuffle
 import operator
 from copy import copy
+import pytest
 
 def test_node_bool():
     n1 = Node(0, 0)
@@ -12,6 +13,7 @@ def test_node_copytest():
     n2 = copy(n1)
     assert id(n1) != id(n2)
     assert n1.id != n2.id
+    assert n1 is not n2
 
 def test_node_eq():
 
@@ -129,12 +131,12 @@ def test_node_sub():
     # 1. Node - scalar
     n0 = Node(0, 0)
     n1 = n0 - 5
-    assert n1 == Node(5, 5)
+    assert n1 == Node(-5, -5)
 
     # 2. Node - iterable
     n0 = Node(0, 0)
     n1 = n0 - (5, 5, 5, 5)
-    assert n1 == Node(5, 5)
+    assert n1 == Node(-5, -5)
 
     # 2.1 Node - invalid iterable
     # TODO: This should raise an error or fall back to scalar addition
@@ -145,12 +147,13 @@ def test_node_sub():
     # 3. Node1 - Node2
     n0 = Node(-10, 50)
     n1 = Node(10, 100)
-    assert n0 - n1 == Node(0, 150)
+    assert n0 - n1 == Node(-20, -50)
 
     # 4. scalar - Node
-    n0 = Node(0, 0)
-    n1 = 5 - n0
-    assert n1 == Node(5, 5)
+    with pytest.raises(ValueError, match='You cannot subtract a Node from a number.'):
+        n0 = Node(0, 0)
+        n1 = 5 - n0
+        assert n1 == Node(5, 5)
 
     # 5. iterable - Node
     n0 = Node(0, 0)
@@ -176,7 +179,7 @@ def test_node_sub():
     n0 = Node(-10, 10)
     n1 = Node(10, -10)
     n0 -= n1
-    assert n0 == Node(0, 0)
+    assert n0 == Node(-20, 20)
 
     # 10. Node + invalid
     # 11. invalid + Node
