@@ -18,8 +18,7 @@ class Node(GeometryPiece):
         self._update_phi()
 
     def set(self, *args, **kwargs):
-        self.x = kwargs.get("x", self.x)
-        self.y = kwargs.get("y", self.y)
+        self.vec = tuple(args)
 
     def _update_l2(self):
         """
@@ -38,6 +37,8 @@ class Node(GeometryPiece):
             self.phi += 360.0
 
         self.phi = fmod(self.phi + self.tol, 360.0) - self.tol
+
+        return self.phi
 
     def _do_operator(self, value, operator_):
         """
