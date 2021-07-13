@@ -17,9 +17,6 @@ class Node():
         self._update_l2()
         self._update_phi()
 
-    def set(self, *args, **kwargs):
-        self.vec = tuple(args)
-
     def _update_l2(self):
         """
         This function calculates the squared distance of a point from the origin.
