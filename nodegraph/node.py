@@ -1,14 +1,14 @@
 from typing import Iterable
 from numbers import Real
-from nodegraph.abc import GeometryPiece
 from math import atan2, fmod, pi
 from nodegraph import getID
 import operator
 import itertools
 
 
-class Node(GeometryPiece):
-    __slots__ = ("vec", "id")
+class Node():
+    tol = 1e-3
+    __slots__ = ("id", "vec", "l2", "phi")
 
     def __init__(self, x, y, *args):
         self.id = getID()
@@ -149,13 +149,13 @@ class Node(GeometryPiece):
         return self
 
     def __mul__(self, val):
-        ...
+        raise NotImplementedError()
 
     def __rmul__(self, val):
-        ...
+        raise NotImplementedError()
 
     def __imul__(self, val):
-        ...
+        raise NotImplementedError()
 
     def __copy__(self):
         return Node(*self)

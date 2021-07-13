@@ -1,8 +1,7 @@
-from nodegraph.abc import GeometryPiece
 from nodegraph import Node
 
 
-class Line(GeometryPiece):
+class Line():
     def __init__(self, tail: Node, head: Node):
         self.start = tail
         self.end = head
