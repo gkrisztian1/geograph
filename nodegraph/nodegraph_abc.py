@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from nodegraph import getID
 
+
 class Vertex(metaclass=ABCMeta):
     def __init__(self):
         self.id = getID()

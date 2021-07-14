@@ -12,7 +12,7 @@ class binarySearchTree:
         else:
             # check for duplicate then stop and return
             if val == self.val:
-                return "no duplicates aloowed in binary search tree"
+                return self.val
             # check if value to be inserted < currentNode's value
             if val < self.val:
                 # check if there is a left node to currentNode if true then recurse
@@ -28,6 +28,8 @@ class binarySearchTree:
                     self.right.insert(val)
                 else:
                     self.right = binarySearchTree(val)
+
+        return val
 
     def breadthFirstSearch(self):
         currentNode = self

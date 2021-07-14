@@ -9,6 +9,10 @@ class Line():
     def __hash__(self):
         return self.start.id ^ self.end.id
 
+    def __bool__(self):
+        """ this will be 0 if tail == head """
+        return bool(hash(self))
+
     def __iter__(self):
         yield self.start.id
         yield self.end.id
