@@ -2,6 +2,15 @@ from nodegraph import Node
 
 
 class Line():
+    def __new__(cls, tail: Node, head: Node):
+        """
+        If head and tail are structurally the same nodes then do not create an edge. (Prevent self loop).
+        """
+        if tail == head:
+            return None
+        else:
+            return super(Line, cls).__new__(cls)
+
     def __init__(self, tail: Node, head: Node):
         self.start = tail
         self.end = head
@@ -21,4 +30,11 @@ class Line():
         return hash(self) == hash(o)
 
     def __repr__(self):
-        return f"L[{self.start} --> {self.end}]"
+        return f"{self.start} --> {self.end}"
+
+
+
+if __name__=='__main__':
+    n1 = Node(4, 2)
+    l1 = Line(n1, n1)
+    print(l1)

@@ -17,13 +17,11 @@ class NodeGraph:
     def add_edge(self, tail: Node, head: Node):
         tail = self.add_vertex(tail)
         head = self.add_vertex(head)
-        if (edge := Line(tail, head)):
-            self.edges.add(edge)
-            return True
-        else:
-            return False
 
-    def __repr__(self) -> str:
+        if edge := Line(tail, head):
+            self.edges.add(edge)
+
+    def __repr__(self):
         nodecounter = 0
         st = 'VERTICES:\n'
         for vi in self.vertices:
