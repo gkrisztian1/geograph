@@ -11,8 +11,24 @@ class NodeGraph:
         self.vertices = Tree()
         self.edges = set()
 
+        self.bbox = [0.0, 0.0, 0.0, 0.0]
+        self.color = None
+
     def add_vertex(self, v: Node):
-        return self.vertices.insert(v)
+        v = self.vertices.insert(v)
+        if v.x < self.bbox[0]:
+            self.bbox[0] = v.x
+
+        if v.y < self.bbox[1]:
+            self.bbox[1] = v.y
+
+        if v.x > self.bbox[2]:
+            self.bbox[2] = v.x
+
+        if v.y > self.bbox[3]:
+            self.bbox[3] = v.y
+
+        return v
 
     def add_edge(self, tail: Node, head: Node):
         tail = self.add_vertex(tail)
@@ -29,6 +45,9 @@ class NodeGraph:
             nodecounter +=1
 
         st += f'\tnumber of vertices: {nodecounter}\n'
+        st += f'\tbounding box: {self.bbox}\n'
+        if self.color:
+            st += f'\tcolor: {self.color}\n'
         edgecounter = 0
         st += "EDGES:\n"
         for ei in self.edges:
@@ -53,3 +72,4 @@ if __name__ == '__main__':
 
 
     print(g)
+    print(g.bbox)
