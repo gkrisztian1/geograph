@@ -2,12 +2,10 @@ from typing import Iterable
 from numbers import Real
 from math import atan2, fmod, pi
 from nodegraph import getID
-from nodegraph.nodegraph_abc import Vertex
 import operator
 import itertools
 
 
-@Vertex.register
 class Node():
     tol = 1e-3
     __slots__ = ("id", "vec", "l2", "phi")

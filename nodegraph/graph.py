@@ -1,14 +1,14 @@
 # from nodegraph import getID
 from nodegraph import Line
 from nodegraph import Node
-from nodegraph import binarySearchTree
+from nodegraph import Tree
 
 
 class NodeGraph:
 
     def __init__(self):
         # self.id = getID()
-        self.vertices = binarySearchTree()
+        self.vertices = Tree()
         self.edges = set()
 
     def add_vertex(self, v: Node):
@@ -26,7 +26,7 @@ class NodeGraph:
     def __repr__(self) -> str:
         nodecounter = 0
         st = 'VERTICES:\n'
-        for vi in self.vertices.depthFirstSearch_POSTorder():
+        for vi in self.vertices:
             st += f'\t{vi}\n'
             nodecounter +=1
 
@@ -50,15 +50,8 @@ if __name__ == '__main__':
     nodegenerator = lambda : Node(randint(*xlim), randint(*ylim))
 
     g = NodeGraph()
-    # for i in range(N):
-    #     g.add_edge(nodegenerator(), nodegenerator())
+    for i in range(N):
+        g.add_edge(nodegenerator(), nodegenerator())
 
 
-    # print(g)
-    vertices = [nodegenerator() for i in range(N)]
-    edges = {edge for _ in range(N) if (edge := Line(choice(vertices), choice(vertices))
-                                        )}
-
-
-    print(edges)
-    print(len(edges))
+    print(g)
