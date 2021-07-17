@@ -11,7 +11,9 @@ class Tree:
             self.vec.append(val)
             return val
 
-
-
     def __iter__(self):
         yield from self.vec
+
+
+    def __len__(self):
+        return len(self.vec)

@@ -1,6 +1,6 @@
 from typing import Iterable
 from numbers import Real
-from math import atan2, fmod, pi
+from math import atan2, fmod, pi, sqrt
 from nodegraph import getID
 import operator
 import itertools
@@ -10,7 +10,7 @@ class Node():
     tol = 1e-3
     __slots__ = ("id", "vec", "l2", "phi")
 
-    def __init__(self, x, y, *args):
+    def __init__(self, x, y):
         self.id = getID()
         self.vec = (float(x), float(y))
 
@@ -75,8 +75,8 @@ class Node():
         """
         if isinstance(o, Iterable):
             return all(
-                self._do_operator(o, lambda own, other: abs(own - other) < self.tol)
-            )
+                    self._do_operator(o, lambda own, other: abs(own - other) < self.tol)
+                    )
         else:
             return False
 
@@ -154,9 +154,12 @@ class Node():
     def __imul__(self, val):
         raise NotImplementedError()
 
+    def __abs__(self):
+        return sqrt(self.l2)
+
     def __copy__(self):
         return Node(*self)
 
     def __repr__(self):
         return f"N({self[0]}, {self[1]})"
-        # return f"({self[0]}, {self[1]}, {self.l2}, {self.fi})"
+    # return f"({self[0]}, {self[1]}, {self.l2}, {self.fi})"

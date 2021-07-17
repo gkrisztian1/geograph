@@ -4,7 +4,8 @@
 
 ---
 
-## Checklist
-
-- [ ]  add __copy__ methods
-- [ ] add __slots__ to Node
+## Notes
+- vertices / edges should be hashable
+- prevent directly adding new edges/nodes to a graph
+  - dedicated method for that
+  - edges can be constructed only from the vertices that are already in the graphs vertex set.
