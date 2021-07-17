@@ -100,3 +100,6 @@ class NodeGraph():
         st += '\n'+'*'*20
 
         return st
+
+    def __repr__(self) -> str:
+        return f"G('{self.color}')"
