@@ -2,12 +2,14 @@ from nodegraph import line
 from nodegraph.line import Line
 from nodegraph.node import Node
 from nodegraph import Tree
+
 """
 nodes should be hashable as well as edges,
 but nodes should not be compared based on hash values !
 """
-class NodeGraph():
 
+
+class NodeGraph:
     def __init__(self, color=0):
         self.color = color
 
@@ -59,22 +61,22 @@ class NodeGraph():
         self.add_line(Node(xstart, ystart), Node(xend, yend), color=color)
 
     def add_line(self, start: Node, end: Node, color=None):
-        if start != end:      
+        if start != end:
             start = self.add_node(start)
             end = self.add_node(end)
             self.edges.add(Line(start, end, color=color))
 
     def set_color_boundary(self, color):
-        """ This function overwrites ALL of the lines' color. """
+        """This function overwrites ALL of the lines' color."""
         for ei in self.edges:
             ei.set_color(color)
 
     def set_color_inner(self, color):
-        """This fucntion changes the graphs color only, not the edges'. """
+        """This fucntion changes the graphs color only, not the edges'."""
         self.color = color
 
     def set_color_change(self, original_color, new_color):
-        """ This function changes the colors of the edges that has original_color. """
+        """This function changes the colors of the edges that has original_color."""
         for ei in self.edges:
             if ei.color == original_color:
                 ei.set_color(new_color)
@@ -83,21 +85,21 @@ class NodeGraph():
         if len(self.vertices) == 0:
             return "EMPTY GRAPH"
 
-        st = '*'*20
-        st += f'\ncolor: {self.color}'
-        st += f'\nBounding box: {self.bbox_xmin:.3f}, {self.bbox_ymin:.3f} - {self.bbox_xmax:.3f}, {self.bbox_ymax:.3f}\n'
-        st += f'number of vertices: {len(self.vertices)}\n'
-        st += f'number of edges: {len(self.edges)}\n'
+        st = "*" * 20
+        st += f"\ncolor: {self.color}"
+        st += f"\nBounding box: {self.bbox_xmin:.3f}, {self.bbox_ymin:.3f} - {self.bbox_xmax:.3f}, {self.bbox_ymax:.3f}\n"
+        st += f"number of vertices: {len(self.vertices)}\n"
+        st += f"number of edges: {len(self.edges)}\n"
 
-        st += '\nVERTICES:\n'
+        st += "\nVERTICES:\n"
         for vi in self.vertices:
-            st += f'\t{vi}\n'
+            st += f"\t{vi}\n"
 
-        st += '\nEDGES:\n'
+        st += "\nEDGES:\n"
         for ei in self.edges:
-            st += f'\t{ei}\n'
+            st += f"\t{ei}\n"
 
-        st += '\n'+'*'*20
+        st += "\n" + "*" * 20
 
         return st
 

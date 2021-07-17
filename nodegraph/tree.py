@@ -1,4 +1,3 @@
-
 class Tree:
     def __init__(self):
         self.vec = list()
@@ -13,7 +12,6 @@ class Tree:
 
     def __iter__(self):
         yield from self.vec
-
 
     def __len__(self):
         return len(self.vec)

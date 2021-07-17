@@ -6,7 +6,7 @@ import operator
 import itertools
 
 
-class Node():
+class Node:
     tol = 1e-3
     __slots__ = ("id", "vec", "l2", "phi")
 
@@ -75,8 +75,8 @@ class Node():
         """
         if isinstance(o, Iterable):
             return all(
-                    self._do_operator(o, lambda own, other: abs(own - other) < self.tol)
-                    )
+                self._do_operator(o, lambda own, other: abs(own - other) < self.tol)
+            )
         else:
             return False
 
@@ -162,4 +162,5 @@ class Node():
 
     def __repr__(self):
         return f"N({self[0]}, {self[1]})"
+
     # return f"({self[0]}, {self[1]}, {self.l2}, {self.fi})"
