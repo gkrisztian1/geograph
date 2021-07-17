@@ -14,8 +14,11 @@ class Line():
         self.start = start 
         self.end = end
 
-        self.color = color
+        self.color = color or 'k'
         self.weight = self._calc_weight()
+
+    def set_color(self, color):
+        self.color = color
 
     def _calc_weight(self):
         """This function calculates the weight of a line between 2 nodes."""
@@ -37,4 +40,4 @@ class Line():
 
     def __repr__(self):
         st = f"{self.start} - {self.end} w: {self.weight:.3f}" 
-        return st + f' c: {self.color}' if self.color else st
+        return st + f' c: {self.color}' if self.color != 'k' else st
