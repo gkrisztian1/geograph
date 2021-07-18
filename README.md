@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/gkrisztian1/nodegraph.svg?branch=main)](https://travis-ci.com/gkrisztian1/nodegraph)
 
+
+[![codecov](https://codecov.io/gh/gkrisztian1/nodegraph/branch/main/graph/badge.svg?token=99DVTEL5FU)](https://codecov.io/gh/gkrisztian1/nodegraph)
 ---
 
 ## Notes
