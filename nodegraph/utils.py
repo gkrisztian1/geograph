@@ -302,10 +302,13 @@ def timing(f):
     return wrap
 
 
-def hex2name2(hexvalue):
+def hex2name(hexvalue):
+    if hexvalue == 'none':
+        return 'white'
+
     hexvalue = int(hexvalue[1:], 16)
     idx = bisect_left(hexvalues, hexvalue)
-    return hexnames[idx - 1]
+    return hexnames[idx]
 
 
 if __name__ == "__main__":

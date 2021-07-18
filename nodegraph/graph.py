@@ -2,7 +2,7 @@ from nodegraph import line
 from nodegraph.line import Line
 from nodegraph.node import Node
 from nodegraph import Tree
-
+from math import inf
 """
 nodes should be hashable as well as edges,
 but nodes should not be compared based on hash values !
@@ -10,17 +10,18 @@ but nodes should not be compared based on hash values !
 
 
 class NodeGraph:
-    def __init__(self, color=0):
+    def __init__(self, color=0, rank=0):
         self.color = color
+        self.rank = int(rank)
 
         self.vertices = Tree()
         self.edges = set()
 
         # Bounding box that contains all the nodes and edges
-        self.bbox_xmin = 0.0
-        self.bbox_xmax = 0.0
-        self.bbox_ymin = 0.0
-        self.bbox_ymax = 0.0
+        self.bbox_xmin = inf
+        self.bbox_xmax = -inf
+        self.bbox_ymin = inf
+        self.bbox_ymax = -inf
 
     def add_node_coords(self, x, y):
         """This funciton adds a new Node instance to its vertex set based on the given coordinates.
@@ -42,7 +43,7 @@ class NodeGraph:
         if n.x > self.bbox_xmax:
             self.bbox_xmax = n.x
 
-        if n.y > self.bbox_ymin:
+        if n.y > self.bbox_ymax:
             self.bbox_ymax = n.y
 
         return n
@@ -104,4 +105,4 @@ class NodeGraph:
         return st
 
     def __repr__(self) -> str:
-        return f"G('{self.color}')"
+        return f"G(v={len(self.vertices)}, e={len(self.edges)}, c='{self.color}')"
