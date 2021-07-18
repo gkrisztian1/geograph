@@ -81,3 +81,23 @@ def test_coloring():
     assert count_color(g, "red") == 0
     assert count_color(g, "blue") == 1
     assert count_color(g, "magenta") == 4
+
+
+def test_rank():
+    g = NodeGraph(rank=-1)
+    assert g.rank == 1
+
+    g.set_rank(111)
+    assert g.rank == 111
+
+    g.set_rank()
+    assert g.rank == 0
+
+
+def test_repr():
+    g = NodeGraph()
+    assert str(g) == "EMPTY GRAPH"
+    g.add_line_coords(0, 0, 1, 0)
+    print(g)  # a little cheating
+
+    assert g.__repr__() == "G(v=2, e=1, c='none')"

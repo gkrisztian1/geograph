@@ -1,3 +1,4 @@
+from typing import Iterable
 from uuid import uuid4
 from time import perf_counter
 from functools import wraps
@@ -313,6 +314,19 @@ def hex2name(hexvalue):
     return hexnames[idx]
 
 
-if __name__ == "__main__":
+def is_rectangle_intersect(r1: Iterable, r2: Iterable):
 
-    print(hex2name2("#B22223"))
+    r1_left, r1_bottom, r1_right, r1_top = r1
+    r2_left, r2_bottom, r2_right, r2_top = r2
+
+    assert r1_left <= r1_right, f"Not a proper bounding box: {r1}"
+    assert r2_left <= r2_right, f"Not a proper bounding box: {r2}"
+    assert r1_bottom <= r1_top, f"Not a proper bounding box: {r1}"
+    assert r2_bottom <= r2_top, f"Not a proper bounding box: {r2}"
+
+    return not (
+        (r2_left > r1_right)
+        or (r2_right < r1_left)
+        or (r2_top < r1_bottom)
+        or (r2_bottom > r1_top)
+    )

@@ -1,5 +1,6 @@
 from nodegraph.utils import getID
 from nodegraph.utils import hex2name
+from nodegraph.utils import is_rectangle_intersect
 from nodegraph.utils import default_color
 
 from nodegraph.node import Node

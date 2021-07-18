@@ -26,3 +26,12 @@ def test_edgeset():
         if edge:
             vertices.add(edge)
     assert len(vertices) == 6
+
+
+def test_line_iter():
+    n1 = Node(5, 6)
+    n2 = Node(-1, 433)
+    e = Line(n1, n2)
+    nodes = list(e)
+    assert nodes[0] == n1
+    assert nodes[1] == n2

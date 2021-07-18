@@ -11,9 +11,9 @@ but nodes should not be compared based on hash values !
 
 
 class NodeGraph:
-    def __init__(self, color="none", rank=0):
+    def __init__(self, color="none", rank=None):
         self.color = color
-        self.rank = int(rank)
+        self.set_rank(rank)
 
         self.vertices = Tree()
         self.edges = set()
@@ -67,6 +67,9 @@ class NodeGraph:
         for ei in self.edges:
             if ei.color == original_color:
                 ei.set_color(new_color)
+
+    def set_rank(self, r=None):
+        self.rank = abs(int(0 if r is None else r))
 
     def __str__(self):
         if len(self.vertices) == 0:

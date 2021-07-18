@@ -2,7 +2,7 @@ from collections import deque
 import svgpathtools as svg
 from nodegraph import NodeGraph
 import matplotlib.pyplot as plt
-from nodegraph import hex2name
+from nodegraph import hex2name, is_rectangle_intersect
 
 
 class Geometry:
@@ -17,28 +17,24 @@ class Geometry:
         self.colorset_inner = set()
         self.colorset_boundary = set()
 
-    def _bbox_intersect(self, g1: NodeGraph, g2: NodeGraph):
-        g1_left = g1.bbox_xmin
-        g1_right = g1.bbox_xmax
-        g1_top = g1.bbox_ymax
-        g1_bottom = g1.bbox_ymin
-
-        g2_left = g2.bbox_xmin
-        g2_right = g2.bbox_xmax
-        g2_top = g2.bbox_ymax
-        g2_bottom = g2.bbox_ymin
-
-        return not (
-            (g2_left > g1_right)
-            or (g2_right < g1_left)
-            or (g2_top < g1_bottom)
-            or (g2_bottom > g1_top)
-        )
-
     def _generate_intersection_queue(self):
         for i in range(len(self.graphs)):
             for j in range(i + 1, len(self.graphs)):
-                if self._bbox_intersect(self.graphs[i], self.graphs[j]):
+                r1 = (
+                    self.graphs[i].bbox_xmin,
+                    self.graphs[i].bbox_ymin,
+                    self.graphs[i].bbox_xmax,
+                    self.graphs[i].bbox_ymax,
+                )
+
+                r2 = (
+                    self.graphs[j].bbox_xmin,
+                    self.graphs[j].bbox_yin,
+                    self.graphs[j].bbox_xmax,
+                    self.graphs[j].bbox_ymax,
+                )
+
+                if is_rectangle_intersect(r1, r2):
                     self.intersection_queue.append((i, j))
 
         while self.intersection_queue:
