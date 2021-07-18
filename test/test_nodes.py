@@ -190,6 +190,23 @@ def test_node_sub():
     # 12. Node += invalid
 
 
+def test_mul():
+
+    # scalar multiplication
+    n1 = Node(2, 4)
+    n2 = Node(-4, 3)
+
+    assert (n1 * 5) == Node(10, 20)
+    assert (5 * n1) == Node(10, 20)
+
+    # dot product
+    assert n1 * n2 == 4.0
+
+    # cross product
+    # v1x * v2y - v1y * v2x
+    assert n1 @ n2 == (2 * 3) - (4 * -4)
+
+
 def test_sort_nodes():
     a = Node(1, 1)
     b = Node(0, 1)
@@ -207,3 +224,9 @@ def test_sort_nodes():
 
     reference_nodes = [e, d, b, f, h, a, c, i, g]
     assert all(map(operator.eq, nodes, reference_nodes))
+
+
+def test_attribute_error():
+    n = Node(5, 6)
+    with pytest.raises(AttributeError):
+        print(n.j)

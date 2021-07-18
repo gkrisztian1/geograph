@@ -29,7 +29,7 @@ class Geometry:
 
                 r2 = (
                     self.graphs[j].bbox_xmin,
-                    self.graphs[j].bbox_yin,
+                    self.graphs[j].bbox_ymin,
                     self.graphs[j].bbox_xmax,
                     self.graphs[j].bbox_ymax,
                 )
@@ -74,11 +74,12 @@ class Geometry:
             self.graphs.append(g)
             self.nb_nodes += len(g.vertices)
             self.nb_edges += len(g.edges)
+            self._generate_intersection_queue()
 
         if verbose:
             print("-" * 20)
 
-    def plot_geometry(self, bbox=False):
+    def plot_geometry(self, bbox=False, show=False):
         fig, ax = plt.subplots()
 
         for gi in self.graphs:
@@ -125,7 +126,8 @@ class Geometry:
                 )
 
         # plt.grid()
-        plt.show()
+        if show:
+            plt.show()
 
     def __str__(self):
         st = "-" * 20 + "\n"

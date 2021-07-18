@@ -1,4 +1,5 @@
 from nodegraph.node import Node
+from itertools import chain
 
 
 class Line:
@@ -21,6 +22,14 @@ class Line:
     def set_color(self, color):
         self.color = color
 
+    def get_bbox(self):
+        xmin = self.start.x if self.start.x < self.end.x else self.end.x
+        xmax = self.start.x if self.start.x > self.end.x else self.end.x
+        ymin = self.start.y if self.start.y < self.end.y else self.end.y
+        ymax = self.start.y if self.start.y > self.end.y else self.end.y
+
+        return (xmin, ymin, xmax, ymax)
+
     def _calc_weight(self):
         """This function calculates the weight of a line between 2 nodes."""
         return abs(self.end - self.start)
@@ -33,8 +42,7 @@ class Line:
         return bool(hash(self))
 
     def __iter__(self):
-        yield self.start
-        yield self.end
+        yield from chain(self.start, self.end)
 
     def __eq__(self, o):
         return hash(self) == hash(o)

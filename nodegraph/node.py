@@ -146,13 +146,25 @@ class Node:
         return self
 
     def __mul__(self, val):
-        raise NotImplementedError()
+        if isinstance(val, Iterable):
+            return sum(self._do_operator(val, operator.mul))
+        else:
+            return Node(*self._do_operator(val, operator.mul))
 
     def __rmul__(self, val):
-        raise NotImplementedError()
+        return self * val
 
     def __imul__(self, val):
-        raise NotImplementedError()
+        if not isinstance(val, Iterable):
+            self.vec = tuple(self._do_operator(val, operator.mul))
+        else:
+            raise ValueError(
+                "You cannot do this. Use dot product or cross product instead."
+            )
+
+    def __matmul__(self, other):
+        # v1x * v2y - v1y * v2x
+        return self.x * other.y - self.y * other.x
 
     def __abs__(self):
         return sqrt(self.l2)
@@ -162,5 +174,4 @@ class Node:
 
     def __repr__(self):
         return f"N({self[0]}, {self[1]})"
-
-    # return f"({self[0]}, {self[1]}, {self.l2}, {self.fi})"
+        # return f"({self[0]}, {self[1]}, {self.l2}, {self.fi})"
