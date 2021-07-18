@@ -11,11 +11,11 @@ class Line:
         else:
             return super(Line, cls).__new__(cls)
 
-    def __init__(self, start: Node, end: Node, color=None):
+    def __init__(self, start: Node, end: Node, color="none"):
         self.start = start
         self.end = end
 
-        self.color = color or "k"
+        self.color = color
         self.weight = self._calc_weight()
 
     def set_color(self, color):

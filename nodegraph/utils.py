@@ -3,6 +3,8 @@ from time import perf_counter
 from functools import wraps
 from bisect import bisect_left
 
+default_color = "none"
+
 hexnames = [
     "black",
     "navy",
@@ -303,8 +305,8 @@ def timing(f):
 
 
 def hex2name(hexvalue):
-    if hexvalue == 'none':
-        return 'white'
+    if hexvalue == "none":
+        return "white"
 
     hexvalue = int(hexvalue[1:], 16)
     idx = bisect_left(hexvalues, hexvalue)

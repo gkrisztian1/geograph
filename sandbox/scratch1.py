@@ -4,7 +4,7 @@ from nodegraph import paths
 import matplotlib.pyplot as plt
 
 geom = Geometry()
-geom.import_svg(paths.path_resources / '3poly.svg' , verbose=True)
+geom.import_svg(paths.path_resources / "3poly.svg", verbose=True)
 
 # geom.plot_geometry(bbox=True)
 print(geom)

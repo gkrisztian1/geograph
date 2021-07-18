@@ -2,8 +2,9 @@ from nodegraph import Tree
 from nodegraph import Node
 from random import randint, uniform
 
+
 def test_filter_node_duplicates():
-    noise = lambda : uniform(-1e-5, 1e-5)
+    noise = lambda: uniform(-1e-5, 1e-5)
     tree = Tree()
 
     for i in range(500):

@@ -4,9 +4,11 @@ import operator
 from copy import copy
 import pytest
 
+
 def test_node_bool():
     n1 = Node(0, 0)
     assert n1 is not None
+
 
 def test_node_copytest():
     n1 = Node(5, 2)
@@ -15,17 +17,21 @@ def test_node_copytest():
     assert n1.id != n2.id
     assert n1 is not n2
 
+
 def test_node_eq():
 
     n1 = Node(1, 0)
     n2 = Node(1, 0)
-    assert n1==n2
+    assert n1 == n2
+
 
 def test_node_neq():
 
     n1 = Node(1.0, 0)
     n2 = Node(0, 1.0)
+    assert (n1 == n2) is False
     assert n1 != n2
+
 
 def test_node_add():
     """
@@ -91,7 +97,7 @@ def test_node_add():
 
     # 8. Node += iterable
     n0 = Node(0, 0)
-    n0 += (5,6,7,8,9,10)
+    n0 += (5, 6, 7, 8, 9, 10)
     assert n0 == Node(5, 6)
 
     # 9. Node1 += Node2
@@ -99,8 +105,6 @@ def test_node_add():
     n1 = Node(10, -10)
     n0 += n1
     assert n0 == Node(0, 0)
-
-
 
     # 10. Node + invalid
     # 11. invalid + Node
@@ -150,7 +154,7 @@ def test_node_sub():
     assert n0 - n1 == Node(-20, -50)
 
     # 4. scalar - Node
-    with pytest.raises(ValueError, match='You cannot subtract a Node from a number.'):
+    with pytest.raises(ValueError, match="You cannot subtract a Node from a number."):
         n0 = Node(0, 0)
         n1 = 5 - n0
         assert n1 == Node(5, 5)
@@ -203,5 +207,3 @@ def test_sort_nodes():
 
     reference_nodes = [e, d, b, f, h, a, c, i, g]
     assert all(map(operator.eq, nodes, reference_nodes))
-
-

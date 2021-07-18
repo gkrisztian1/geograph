@@ -4,6 +4,7 @@ from nodegraph import NodeGraph
 import matplotlib.pyplot as plt
 from nodegraph import hex2name
 
+
 class Geometry:
     def __init__(self, rank=0):
         self.graphs = list()
@@ -27,20 +28,25 @@ class Geometry:
         g2_top = g2.bbox_ymax
         g2_bottom = g2.bbox_ymin
 
-        return not ((g2_left > g1_right) or (g2_right < g1_left) or (g2_top < g1_bottom) or (g2_bottom > g1_top))
+        return not (
+            (g2_left > g1_right)
+            or (g2_right < g1_left)
+            or (g2_top < g1_bottom)
+            or (g2_bottom > g1_top)
+        )
 
     def _generate_intersection_queue(self):
         for i in range(len(self.graphs)):
             for j in range(i + 1, len(self.graphs)):
                 if self._bbox_intersect(self.graphs[i], self.graphs[j]):
                     self.intersection_queue.append((i, j))
-        
+
         while self.intersection_queue:
             print(self.intersection_queue.pop())
 
     def import_svg(self, file_name, verbose=False):
         paths, attribures, svg_attributes = svg.svg2paths2(str(file_name))
-        
+
         # if verbose:
         #     for key, value in svg_attributes.items():
         #         print(key, value)
@@ -55,24 +61,26 @@ class Geometry:
             c2 = hex2name(color_paths)
             self.colorset_inner.add(c1)
             self.colorset_boundary.add(c2)
-            
+
             if verbose:
-                #print(f"inner color: {color_graph}, boundary color: {color_paths}")
-                print(f'from {color_graph}, {color_paths} to {c1}, {c2}')
+                # print(f"inner color: {color_graph}, boundary color: {color_paths}")
+                print(f"from {color_graph}, {color_paths} to {c1}, {c2}")
 
             g = NodeGraph(color=c1)
             for pi in path_i:
                 tail = -pi.start
                 head = -pi.end
 
-                g.add_line_coords(-tail.real, tail.imag, -head.real, head.imag, color=c2)
+                g.add_line_coords(
+                    -tail.real, tail.imag, -head.real, head.imag, color=c2
+                )
 
             self.graphs.append(g)
             self.nb_nodes += len(g.vertices)
             self.nb_edges += len(g.edges)
 
         if verbose:
-            print('-'*20)
+            print("-" * 20)
 
     def plot_geometry(self, bbox=False):
         fig, ax = plt.subplots()
@@ -94,23 +102,42 @@ class Geometry:
                 ax.scatter(vi.x, vi.y, c="r")
 
             if bbox:
-                ax.plot([gi.bbox_xmin, gi.bbox_xmax], [gi.bbox_ymin, gi.bbox_ymin], 'k-', linewidth=0.5)
-                ax.plot([gi.bbox_xmin, gi.bbox_xmax], [gi.bbox_ymax, gi.bbox_ymax], 'k-', linewidth=0.5)
+                ax.plot(
+                    [gi.bbox_xmin, gi.bbox_xmax],
+                    [gi.bbox_ymin, gi.bbox_ymin],
+                    "k-",
+                    linewidth=0.5,
+                )
+                ax.plot(
+                    [gi.bbox_xmin, gi.bbox_xmax],
+                    [gi.bbox_ymax, gi.bbox_ymax],
+                    "k-",
+                    linewidth=0.5,
+                )
 
-                ax.plot([gi.bbox_xmin, gi.bbox_xmin], [gi.bbox_ymin, gi.bbox_ymax], 'k-', linewidth=0.5)
-                ax.plot([gi.bbox_xmax, gi.bbox_xmax], [gi.bbox_ymin, gi.bbox_ymax], 'k-', linewidth=0.5)
+                ax.plot(
+                    [gi.bbox_xmin, gi.bbox_xmin],
+                    [gi.bbox_ymin, gi.bbox_ymax],
+                    "k-",
+                    linewidth=0.5,
+                )
+                ax.plot(
+                    [gi.bbox_xmax, gi.bbox_xmax],
+                    [gi.bbox_ymin, gi.bbox_ymax],
+                    "k-",
+                    linewidth=0.5,
+                )
 
         # plt.grid()
         plt.show()
 
-
     def __str__(self):
-        st = '-'*20 + '\n'
-        st += f'number of graphs: {len(self.graphs)}\n'
-        st += f'number of nodes:  {self.nb_nodes}\n'
-        st += f'number of edges:  {self.nb_edges}\n'
-        st += 'inner colors: ' + ', '.join(self.colorset_inner) + '\n'
-        st += 'boundary colors: ' + ', '.join(self.colorset_boundary) + '\n'
+        st = "-" * 20 + "\n"
+        st += f"number of graphs: {len(self.graphs)}\n"
+        st += f"number of nodes:  {self.nb_nodes}\n"
+        st += f"number of edges:  {self.nb_edges}\n"
+        st += "inner colors: " + ", ".join(self.colorset_inner) + "\n"
+        st += "boundary colors: " + ", ".join(self.colorset_boundary) + "\n"
 
-        st += '-'*20 + '\n'
+        st += "-" * 20 + "\n"
         return st

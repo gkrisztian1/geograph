@@ -3,6 +3,7 @@ from nodegraph.line import Line
 from nodegraph.node import Node
 from nodegraph import Tree
 from math import inf
+
 """
 nodes should be hashable as well as edges,
 but nodes should not be compared based on hash values !
@@ -10,7 +11,7 @@ but nodes should not be compared based on hash values !
 
 
 class NodeGraph:
-    def __init__(self, color=0, rank=0):
+    def __init__(self, color="none", rank=0):
         self.color = color
         self.rank = int(rank)
 
@@ -24,11 +25,6 @@ class NodeGraph:
         self.bbox_ymax = -inf
 
     def add_node_coords(self, x, y):
-        """This funciton adds a new Node instance to its vertex set based on the given coordinates.
-
-        :x: The x coordinate of the Node
-        :y: The y coordinate of the Node
-        """
         self.add_node(Node(x, y))
 
     def add_node(self, n: Node):
@@ -48,20 +44,10 @@ class NodeGraph:
 
         return n
 
-    def add_line_coords(self, xstart, ystart, xend, yend, color=None):
-        """TODO: Docstring for add_line_coords.
-
-        :xstart: TODO
-        :ystart: TODO
-        :xend: TODO
-        :yend: TODO
-        :color: TODO
-        :returns: TODO
-
-        """
+    def add_line_coords(self, xstart, ystart, xend, yend, color="none"):
         self.add_line(Node(xstart, ystart), Node(xend, yend), color=color)
 
-    def add_line(self, start: Node, end: Node, color=None):
+    def add_line(self, start: Node, end: Node, color="none"):
         if start != end:
             start = self.add_node(start)
             end = self.add_node(end)
@@ -76,7 +62,7 @@ class NodeGraph:
         """This fucntion changes the graphs color only, not the edges'."""
         self.color = color
 
-    def set_color_change(self, original_color, new_color):
+    def set_color_change(self, new_color, original_color="none"):
         """This function changes the colors of the edges that has original_color."""
         for ei in self.edges:
             if ei.color == original_color:
