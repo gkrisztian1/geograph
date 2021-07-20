@@ -39,8 +39,8 @@ class Geometry:
                 if self.is_rectangle_intersect(r1, r2):
                     self.intersection_queue.append((i, j))
 
-        while self.intersection_queue:
-            print(self.intersection_queue.pop())
+        # while self.intersection_queue:
+        #     print(self.intersection_queue.pop())
 
     def import_svg(self, file_name, verbose=False):
         paths, attribures, svg_attributes = svg.svg2paths2(str(file_name))
