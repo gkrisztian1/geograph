@@ -35,7 +35,7 @@ class Line:
         return abs(self.end - self.start)
 
     def __hash__(self):
-        return self.start.id ^ self.end.id
+        return self.start.name ^ self.end.name
 
     def __bool__(self):
         """this will be 0 if tail == head"""

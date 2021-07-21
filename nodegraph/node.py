@@ -8,10 +8,11 @@ import itertools
 
 class Node:
     tol = 1e-3
-    __slots__ = ("id", "vec", "l2", "phi")
+    __slots__ = ("name", "group", "vec", "l2", "phi")
 
-    def __init__(self, x, y):
-        self.id = getID()
+    def __init__(self, x, y, name=None, group=None):
+        self.name = name or getID()
+        self.group = group
         self.vec = (float(x), float(y))
 
         self._update_l2()
@@ -83,7 +84,7 @@ class Node:
     def __lt__(self, o):
         """
         This function compares the operands l2 value with its l2 value. If they're equal (whitin tolerance)
-        that means the nodes are on the same circle. If that's the case then check their angle return accordingly.
+        that means the nodes are on the same circle. If that's the case then check their angle and return accordingly.
         If the l2 values are different then one node is obviously bigger than the other. In that case check the
         differences sign.
         :param o: other Node
@@ -111,7 +112,7 @@ class Node:
         yield from self.vec
 
     def __add__(self, val):
-        """Create a new Node instance with tha val addition"""
+        """Create a new Node instance with the val addition"""
         return Node(*self._do_operator(val, operator.add))
 
     def __radd__(self, val):
@@ -127,7 +128,7 @@ class Node:
         return self
 
     def __sub__(self, val):
-        """Create a new Node instance with tha val subtraction"""
+        """Create a new Node instance with the val subtraction"""
         return Node(*self._do_operator(val, operator.sub))
 
     def __rsub__(self, val):
@@ -146,6 +147,10 @@ class Node:
         return self
 
     def __mul__(self, val):
+        """
+        Multiplication with an Iterable object will result the dot product between self and val. Otherwise scale the
+        coordinates according to val.
+        """
         if isinstance(val, Iterable):
             return sum(self._do_operator(val, operator.mul))
         else:
@@ -163,6 +168,9 @@ class Node:
             )
 
     def __matmul__(self, other):
+        """
+        This function returns the cross product between 2 Node instances. ue 'a @ b' for shortcut.
+        """
         # v1x * v2y - v1y * v2x
         return self.x * other.y - self.y * other.x
 

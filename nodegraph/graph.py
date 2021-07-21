@@ -102,7 +102,7 @@ class NodeGraph:
                 ei.set_color(new_color)
 
     def set_rank(self, r=None):
-        """ This function sets the rank of the graph. Which can be any positive number. Higher numbers mean higher prioritiy."""
+        """This function sets the rank of the graph. Which can be any positive number. Higher numbers mean higher prioritiy."""
         self.rank = abs(int(0 if r is None else r))
 
     def __str__(self):

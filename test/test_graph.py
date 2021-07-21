@@ -100,4 +100,4 @@ def test_repr():
     g.add_line_coords(0, 0, 1, 0)
     print(g)  # a little cheating
 
-    assert g.__repr__() == "G(v=2, e=1, c='none')"
+    assert g.__repr__() == "G(v=2, e=1, c='none', r=0)"

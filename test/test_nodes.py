@@ -14,7 +14,7 @@ def test_node_copytest():
     n1 = Node(5, 2)
     n2 = copy(n1)
     assert id(n1) != id(n2)
-    assert n1.id != n2.id
+    assert n1.name != n2.name
     assert n1 is not n2
 
 
