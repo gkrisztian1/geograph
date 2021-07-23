@@ -4,5 +4,4 @@ matplotlib
 numpy
 pytest
 svgpathtools
-tox
-pre-commit
+ezdxf

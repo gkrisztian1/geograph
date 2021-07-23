@@ -18,6 +18,11 @@ class Node:
         self._update_l2()
         self._update_phi()
 
+    def set(self, **kwargs):
+        x = kwargs.get('x', self.vec[0])
+        y = kwargs.get('y', self.vec[1])
+        self.vec = (x, y)
+
     def _update_l2(self):
         """
         This function calculates the squared distance of a point from the origin.

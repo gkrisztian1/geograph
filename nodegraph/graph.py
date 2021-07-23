@@ -84,7 +84,7 @@ class NodeGraph:
         if start != end:
             start = self.add_node(start)
             end = self.add_node(end)
-            self.edges.add(Line(start, end, color=color))
+            self.edges.add(Line(start, end, name=color))
 
     def set_color_boundary(self, color):
         """This function overwrites ALL of the lines' color."""

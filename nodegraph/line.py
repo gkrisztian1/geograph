@@ -1,3 +1,4 @@
+from nodegraph import getID
 from nodegraph.node import Node
 from itertools import chain
 
@@ -12,11 +13,12 @@ class Line:
         else:
             return super(Line, cls).__new__(cls)
 
-    def __init__(self, start: Node, end: Node, color="none"):
+    def __init__(self,start: Node, end: Node, name=None, group=None, **kwargs):
         self.start = start
         self.end = end
 
-        self.color = color
+        self.name = name or getID()
+        self.group = group
         self.weight = self._calc_weight()
 
     def set_color(self, color):

@@ -6,22 +6,6 @@
 [![Code Grade](https://www.code-inspector.com/project/25408/score/svg)](https://frontend.code-inspector.com/project/25408/dashboard)
 ---
 
-## Project description
-
-This project was created to help building parametrized 2D geometries from svg-s or dxf files or just with pure Python. After the creation you can render the
-geometry with matplotlib or you can print it to a file. You can parametrize certain part of the geometry with simple commands and hence
-you can solve complex geometry optimization problems. The tool detects collision and brakes the geometry into smaller parts when rendered.
-
-## Why use?
-- You can import from dxf and svg and you can add your own lines/points to the geometry.
-- Easy parametrization. Color or label the parametrized object and use the set(color, parameter=value) method to modify its properties
-- Easy geometry creation with repeated objects. You can spawn as many object as you want and then move them to
-their destination with ease.
-- You can group objects by name or color and you can do actions grouped such as translate, scale or rotate.
-
-## Example
-Let's suppose we want to optimize a shape with a FEM solver, but parts of the geometry are missing or distributed in different files. You also want to
-optimize certain parts with Cubic Bézier-curves and certain parts with nodes.
 ```python
 from nodegraph import Geometry
 from nodegraph import Node
@@ -51,7 +35,7 @@ g.render()
 
 ```
 
-## Parameter ```ptions
+## Parameter ```Options```
 
   - ```Node```: ``` x ```, ``` y ```
   - ```Line```: ``` x_start ```, ``` y_start ```, ``` x_end ```, ``` y_end ```
