@@ -1,6 +1,5 @@
-from nodegraph import Node
-from nodegraph import Line
-import pytest
+from geograph import Node
+from geograph import Line
 from random import choice
 
 

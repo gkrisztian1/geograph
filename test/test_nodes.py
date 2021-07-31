@@ -1,4 +1,4 @@
-from nodegraph import Node
+from geograph import Node
 from random import shuffle
 import operator
 from copy import copy

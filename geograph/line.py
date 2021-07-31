@@ -1,5 +1,5 @@
-from nodegraph import getID
-from nodegraph.node import Node
+from geograph import getID
+from geograph.node import Node
 from itertools import chain
 
 
@@ -13,7 +13,7 @@ class Line:
         else:
             return super(Line, cls).__new__(cls)
 
-    def __init__(self,start: Node, end: Node, name=None, group=None, **kwargs):
+    def __init__(self, start: Node, end: Node, name=None, group=None, **kwargs):
         self.start = start
         self.end = end
 

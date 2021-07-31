@@ -1,9 +1,7 @@
-from typing import Iterable
 from uuid import uuid4
 from time import perf_counter
 from functools import wraps
 from bisect import bisect_left
-import numpy as np
 
 default_color = "none"
 

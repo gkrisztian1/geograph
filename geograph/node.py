@@ -1,7 +1,7 @@
 from typing import Iterable
 from numbers import Real
 from math import atan2, fmod, pi, sqrt
-from nodegraph import getID
+from geograph import getID
 import operator
 import itertools
 
@@ -19,8 +19,8 @@ class Node:
         self._update_phi()
 
     def set(self, **kwargs):
-        x = kwargs.get('x', self.vec[0])
-        y = kwargs.get('y', self.vec[1])
+        x = kwargs.get("x", self.vec[0])
+        y = kwargs.get("y", self.vec[1])
         self.vec = (x, y)
 
     def _update_l2(self):
