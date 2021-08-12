@@ -188,3 +188,6 @@ class Node:
     def __repr__(self):
         return f"N({self[0]}, {self[1]})"
         # return f"({self[0]}, {self[1]}, {self.l2}, {self.fi})"
+
+    def __hash__(self):
+        return id(self)

@@ -1,7 +1,7 @@
 from geograph import getID
 from geograph.node import Node
 from itertools import chain
-
+from collections.abc import Hashable
 
 class Line:
     def __new__(cls, tail: Node, head: Node, **kwargs):
@@ -13,35 +13,35 @@ class Line:
         else:
             return super(Line, cls).__new__(cls)
 
-    def __init__(self, start: Node, end: Node, name=None, group=None, **kwargs):
+    def __init__(self, start: Node, end: Node, name:Hashable=None, group:Hashable=None, **kwargs):
         self.start = start
         self.end = end
-
-        self.name = name or getID()
+        self.name = name
         self.group = group
+        self.bbox = None
+        self.center_point = None
+
+
         self.weight = self._calc_weight()
-
-    def set_color(self, color):
-        self.color = color
-
-    def get_bbox(self):
-        xmin = self.start.x if self.start.x < self.end.x else self.end.x
-        xmax = self.start.x if self.start.x > self.end.x else self.end.x
-        ymin = self.start.y if self.start.y < self.end.y else self.end.y
-        ymax = self.start.y if self.start.y > self.end.y else self.end.y
-
-        return (xmin, ymin, xmax, ymax)
+        self._update_bbox()
 
     def _calc_weight(self):
         """This function calculates the weight of a line between 2 nodes."""
         return abs(self.end - self.start)
 
+    def _update_bbox(self):
+        xmin, xmax = sorted([self.start.x, self.end.x])
+        ymin, ymax = sorted([self.start.y, self.end.y])
+
+        self.bbox = (Node(xmin, ymin), Node(xmax, ymax))
+        self.center_point = self.bbox[0] + 0.5 * (self.bbox[1] - self.bbox[0])
+
+
     def __hash__(self):
-        return self.start.name ^ self.end.name
+        return hash(self.start) ^ hash(self.end)
 
     def __bool__(self):
-        """this will be 0 if tail == head"""
-        return bool(hash(self))
+        return self.weight < 1e-5
 
     def __iter__(self):
         yield from chain(self.start, self.end)
@@ -51,4 +51,4 @@ class Line:
 
     def __repr__(self):
         st = f"{self.start} - {self.end} w: {self.weight:.3f}"
-        return st + f" c: {self.color}" if self.color != "k" else st
+        return st + f" c: {self.name}" if self.name is not None else st
