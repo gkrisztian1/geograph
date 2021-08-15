@@ -1,2 +1,6 @@
 site_name: Geograph
+site_url: https://example.com/
+
+nav:
+  - Home: index.md
 
