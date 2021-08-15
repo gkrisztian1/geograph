@@ -41,3 +41,9 @@ g.render()
   - ```Line```: ``` x_start ```, ``` y_start ```, ``` x_end ```, ``` y_end ```
   - ```CircleArc```: ``` x_start ```, ``` y_start ```, ``` x_r ```, ``` y_r ```, ``` x_end ```, ``` y_end ```
   - ```CubicBezier```: ```x_start```, ```y_start```, ```c1_x```, ```c1_y```, ```c2_X```, ```c2_y```, ```x_end```, ```y_end```
+
+
+## Geometry elements
+
+### Node
+

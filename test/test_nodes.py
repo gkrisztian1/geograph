@@ -1,5 +1,5 @@
 from geograph import Node
-from random import shuffle
+from random import shuffle, uniform
 import operator
 from copy import copy
 import pytest
@@ -14,7 +14,6 @@ def test_node_copytest():
     n1 = Node(5, 2)
     n2 = copy(n1)
     assert id(n1) != id(n2)
-    assert n1.name != n2.name
     assert n1 is not n2
 
 
@@ -24,6 +23,9 @@ def test_node_eq():
     n2 = Node(1, 0)
     assert n1 == n2
 
+    n1 = Node(9, 0)
+    n1.rotate(56)
+    assert pytest.approx(9.0) == n1
 
 def test_node_neq():
 
@@ -230,3 +232,40 @@ def test_attribute_error():
     n = Node(5, 6)
     with pytest.raises(AttributeError):
         print(n.j)
+
+
+def test_translate():
+    n0 = Node(-1, 3)
+
+    n0.translate(dx=1)
+    assert pytest.approx((0.0, 3)) == list(n0)
+    
+    n0.translate(dy=-3)
+    assert pytest.approx((0.0, 0.0)) == list(n0)
+
+    # random tests
+    xref = 0.0
+    yref = 0.0
+    for i in range(500):
+        dx = uniform(-100, 100)
+        dy = uniform(-100, 100)
+        xref += dx
+        yref += dy
+        n0.translate(dx=dx, dy=dy)
+
+    assert pytest.approx((xref, yref)) == list(n0)
+
+
+def rotate():
+    n0 = Node(1, 0)
+    
+    n0.rotate(90)
+    assert pytest.approx((0.0, 1.0)) == list(n0)
+
+
+    n0.rotate(180, ref_pt=(2, 1))
+    assert pytest.approx((3.0, 1.0)) == list(n0)
+
+
+
+

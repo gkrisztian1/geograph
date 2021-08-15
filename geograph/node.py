@@ -1,6 +1,7 @@
+import re
 from typing import Iterable
 from numbers import Real
-from math import atan2, fmod, pi, sqrt
+from math import atan2, sin, cos, fmod, pi, sqrt, radians
 from geograph import getID
 import operator
 import itertools
@@ -8,20 +9,68 @@ import itertools
 
 class Node:
     tol = 1e-3
-    __slots__ = ("name", "group", "vec", "l2", "phi")
+    __slots__ = ("_id", "name", "group", "vec", "l2", "phi")
 
     def __init__(self, x, y, name=None, group=None):
-        self.name = name or getID()
+        self.name = name
         self.group = group
         self.vec = (float(x), float(y))
 
+        self._update()
+
+    def unitvector(self, other):
+        """
+        Returns a vector that points from self to other and has a length of 1.
+        """
+        u = other - self
+        return u / abs(u)
+
+    def translate(self, dx=0, dy=0):
+        """
+        This function translates the node by dx and dy.
+        new x = x + dx
+        new y = y + dy
+        """
+        self += (dx, dy)
+        self._update()
+
+    def move(self, xn: float, yn: float):
+        """
+        This function moves the node to a new location.
+        """
+        self.vec = (xn, yn)
+        self._update()
+
+    def rotate(self, alpha, ref_pt=(0, 0)):
+        """
+        This function rotates the point with alpha degrees counter clockwise around the ref_pt.
+        The default ref_pt is the origin.
+        """
+        refx, refy = ref_pt
+        alpha = radians(alpha)
+        s = sin(alpha)
+        c = cos(alpha)
+        x, y = self
+
+        new_x = (x - refx) * c - (y - refy) * s + refx
+        new_y = (x - refx) * s + (y - refy) * c + refy
+
+        self.move(xn=new_x, yn=new_y)
+
+    def mirror(self, p0=(0, 0), p1=(0, 1)):
+        """
+        This function returns a new Node instance which is the mirror image of self on the p0-p1 axis.
+        """
+        ...
+
+    def _update(self):
+        precision = 6
         self._update_l2()
         self._update_phi()
 
-    def set(self, **kwargs):
-        x = kwargs.get("x", self.vec[0])
-        y = kwargs.get("y", self.vec[1])
-        self.vec = (x, y)
+        self.vec = (round(self.vec[0], precision), round(self.vec[1], precision))
+        self.l2 = round(self.l2, precision)
+        self.phi = round(self.phi)
 
     def _update_l2(self):
         """
@@ -84,7 +133,7 @@ class Node:
                 self._do_operator(o, lambda own, other: abs(own - other) < self.tol)
             )
         else:
-            return False
+            return abs(abs(self) - o) < self.tol
 
     def __lt__(self, o):
         """
@@ -168,7 +217,7 @@ class Node:
         if not isinstance(val, Iterable):
             self.vec = tuple(self._do_operator(val, operator.mul))
         else:
-            raise ValueError(
+            raise TypeError(
                 "You cannot do this. Use dot product or cross product instead."
             )
 
@@ -178,6 +227,12 @@ class Node:
         """
         # v1x * v2y - v1y * v2x
         return self.x * other.y - self.y * other.x
+
+    def __truediv__(self, val):
+        """
+        This function implements the division operator based on the multiplication. It only accepts scalar values.
+        """
+        return self * (1 / val)
 
     def __abs__(self):
         return sqrt(self.l2)
