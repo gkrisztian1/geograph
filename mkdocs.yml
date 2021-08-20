@@ -3,4 +3,19 @@ site_url: https://example.com/
 
 nav:
   - Home: index.md
+  - Building Blocks:
+    - Node: building_blocks/node.md
+    - Line: building_blocks/line.md
+
+theme: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            filters:
+              - "!^__"
+              - "!^_"
 

@@ -1,3 +1,4 @@
+import math
 from geograph import getID
 from geograph.node import Node
 from itertools import chain
@@ -68,6 +69,7 @@ class Line:
         This funciton translates both the startpoint and enpoint to dx and dy.
         """
         self.start += (dx, dy)
+        self.end += (dx, dy)
         self._update()
 
     def move(self, xn, yn, ref_pt="center"):
@@ -91,9 +93,27 @@ class Line:
                 f"Invalid value for ref_pt. Accepted values are 'center', 'start', 'end'.Got {ref_pt=}."
             )
 
-
-        print(delta.x, delta.y)
         self.translate(delta.x, delta.y)
+
+    def rotate(self, alpha, fx_pt=(0.0, 0.0), ref_pt=None):
+        """ """
+
+        if ref_pt == "start":
+            fx_pt = Node(*self.start)
+        elif ref_pt == "center":
+            fx_pt = Node(*self.center_point)
+        elif ref_pt == "end":
+            fx_pt = Node(*self.end)
+        elif ref_pt is None:
+            fx_pt = Node(0, 0)
+        else:
+            raise ValueError(
+                f"Invalid value for ref_pt. Accepted values are 'center', 'start', 'end'.Got {ref_pt=}."
+            )
+
+        self.start.rotate(alpha, ref_pt=fx_pt)
+        self.end.rotate(alpha, ref_pt=fx_pt)
+        self._update()
 
     def _update(self):
         self._update_length()

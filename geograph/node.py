@@ -8,6 +8,7 @@ import itertools
 
 
 class Node:
+
     tol = 1e-3
     __slots__ = ("_id", "name", "group", "vec", "l2", "phi")
 

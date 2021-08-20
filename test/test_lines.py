@@ -71,15 +71,20 @@ def test_line_move():
 
     l.move(xn=1.0, yn=1.0, ref_pt='start')
     assert pytest.approx([1.0, 1.0]) == list(l.start)
-    # assert pytest.approx([2.0, 1.0]) == list(l.end)
+    assert pytest.approx([2.0, 1.0]) == list(l.end)
     assert pytest.approx(1.0) == l.length
 
     l.move(xn=0, yn=0)
-    print(l)
     assert pytest.approx([0.0, 0.0]) == list(l.center_point)
     assert pytest.approx([-0.5, 0.0]) == list(l.start)
     assert pytest.approx([0.5, 0.0]) == list(l.end)
     assert pytest.approx(1.0) == l.length
 
-if __name__ == "__main__":
-    test_line_move()
+def test_line_rotate():
+    n0 = Node(1, 0)
+    n1 = Node(2, 0)
+    l = Line(n0, n1)
+
+    l.rotate(90)
+    assert pytest.approx([0.0, 1.0]) == list(l.start)
+    assert pytest.approx([0.0, 2.0]) == list(l.end)
